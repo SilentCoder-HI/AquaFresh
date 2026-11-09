@@ -1,78 +1,80 @@
-# React + TypeScript + Vite
+# AquaFresh Order Board
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript web app for AquaFresh Water Delivery staff to view delivery orders as cards.
 
-Currently, two official plugins are available:
+This is **Task 1** of the AquaFresh project: a single page that shows sample order cards. The orders are stored in React state (`useState`). The Express/MongoDB API, moving cards between columns, and deployment come in the next tasks.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Page header: "AquaFresh Order Board"
+- Reusable `Card` component that receives order data through props
+- Order list rendered with `map` from a `useState` array
+- Each card shows the customer name, package size and status
+- Typed with TypeScript and styled with Tailwind CSS
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Tech stack
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Requirements
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 18 or newer
+- npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Install and run
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm start
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Open the local URL that Vite prints in the terminal (usually http://localhost:5173).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Available scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Command | Description |
+| --- | --- |
+| `npm start` | Start the development server (same as `npm run dev`). |
+| `npm run dev` | Start the development server. |
+| `npm run build` | Type-check and create a production build. |
+| `npm run preview` | Preview the production build locally. |
+| `npm run lint` | Run ESLint. |
+
+## Project structure
 
 ```
+src/
+  components/
+    Card.tsx      # Shows one order
+  types/
+    Order.ts      # Order type
+  App.tsx         # Page header and order list
+  main.tsx        # App entry point
+```
+
+## Sample data
+
+Each order has this shape:
+
+```ts
+type Order = {
+  id: number;
+  packageSize: string;
+  customer: string;
+  status: "Paid" | "Pending";
+};
+```
+
+## What is not included yet
+
+- Backend API and database (Task 2)
+- Fetching live data, moving cards between columns and deployment (Task 3)
+
+## Author
+
+Hussnain Iftikhar
