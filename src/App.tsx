@@ -11,9 +11,9 @@ function App() {
   ]);
   return (
     <>
-      <div className='flex flex-col items-center'>
+      <div className='flex flex-col items-center w-full'>
         <h1 className="text-2xl font-bold p-4">AquaFresh Order Board</h1>
-        <div className='bg-white'>
+        <div className='bg-white w-90'>
           {orders.map((order) => (
             <Card key={order.id} Order={order} />
           ))}
