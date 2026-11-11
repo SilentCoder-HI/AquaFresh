@@ -1,17 +1,14 @@
 import { Draggable } from "@hello-pangea/dnd";
 import type { Order } from "../types/Order";
-import { deleteOrder } from "../data/apt";
 
 interface Props {
   order: Order;
   index: number;
+  onDelete: (id: string) => void;
 }
 
-export default function Card({ order, index }: Props) {
+export default function Card({ order, index, onDelete }: Props) {
 
-  const onDelete = async (id:string)=>{
-    deleteOrder(id).catch(console.error)
-  }
   return (
     <Draggable draggableId={String(order._id)} index={index}>
       {(provided, snapshot) => (

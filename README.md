@@ -1,16 +1,19 @@
-# AquaFresh Order Board
+# AquaFresh Frontend
 
-A React + TypeScript web app for AquaFresh Water Delivery staff to view delivery orders as cards.
+This is the React frontend for the AquaFresh water-delivery dashboard. It presents orders in a board layout with three statuses: Pending, In-Transit, and Delivered.
 
-This is **Task 1** of the AquaFresh project: a single page that shows sample order cards. The orders are stored in React state (`useState`). The Express/MongoDB API, moving cards between columns, and deployment come in the next tasks.
+## Overview
+
+The app is built with Vite and TypeScript and uses a drag-and-drop board to move orders between columns. Each order card shows the customer name, package size, and a delete button.
 
 ## Features
 
-- Page header: "AquaFresh Order Board"
-- Reusable `Card` component that receives order data through props
-- Order list rendered with `map` from a `useState` array
-- Each card shows the customer name, package size and status
-- Typed with TypeScript and styled with Tailwind CSS
+- Order board with three status columns
+- Drag-and-drop reordering between columns
+- Reusable card component
+- Delete action for each order
+- Responsive dashboard layout with Tailwind CSS
+- Type-safe frontend models for order data
 
 ## Tech stack
 
@@ -18,62 +21,81 @@ This is **Task 1** of the AquaFresh project: a single page that shows sample ord
 - TypeScript
 - Vite
 - Tailwind CSS
+- @hello-pangea/dnd
+- Axios
 
-## Getting started
+## Local setup
 
-### Requirements
+### Prerequisites
 
-- Node.js 18 or newer
+- Node.js 18+
 - npm
 
 ### Install and run
 
 ```bash
+cd frontend
 npm install
-npm start
+npm run dev
 ```
 
-Open the local URL that Vite prints in the terminal (usually http://localhost:5173).
+The app usually runs at:
+
+```text
+http://localhost:5173
+```
 
 ## Available scripts
 
-| Command | Description |
-| --- | --- |
-| `npm start` | Start the development server (same as `npm run dev`). |
-| `npm run dev` | Start the development server. |
-| `npm run build` | Type-check and create a production build. |
-| `npm run preview` | Preview the production build locally. |
-| `npm run lint` | Run ESLint. |
+```bash
+npm run dev     # start the Vite development server
+npm start      # same as npm run dev
+npm run build   # type-check and create production build
+npm run preview # preview the production build
+npm run lint    # run ESLint
+```
 
 ## Project structure
 
-```
-src/
-  components/
-    Card.tsx      # Shows one order
-  types/
-    Order.ts      # Order type
-  App.tsx         # Page header and order list
-  main.tsx        # App entry point
+```text
+frontend/
+├── public/
+├── src/
+│   ├── App.css
+│   ├── App.tsx
+│   ├── index.css
+│   ├── main.tsx
+│   ├── components/
+│   │   └── Card.tsx
+│   └── types/
+│       └── Order.tsx
+├── index.html
+├── package.json
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.node.json
+├── vite.config.ts
+└── README.md
 ```
 
-## Sample data
-
-Each order has this shape:
+## Data model
 
 ```ts
-type Order = {
-  id: number;
+export type Status = "Pending" | "In-Transit" | "Delivered";
+
+export interface Order {
+  _id: string;
   packageSize: string;
   customer: string;
-  status: "Paid" | "Pending";
-};
+  status: Status;
+}
 ```
 
-## What is not included yet
+## Notes
 
-- Backend API and database (Task 2)
-- Fetching live data, moving cards between columns and deployment (Task 3)
+- The frontend keeps order state in the React app and updates the status after drag events.
+- The delete action is implemented directly from the card component.
+- The app is designed to work with the AquaFresh backend API on port 5000.
 
 ## Author
 

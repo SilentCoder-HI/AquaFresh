@@ -3,7 +3,7 @@ import './App.css'
 import type { Order, Status } from './types/Order'
 import Card from './components/Card';
 import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
-import { getOrder, updateStatus } from './data/apt';
+import { deleteOrder, getOrder, updateStatus } from './data/apt';
 
 const COLUMNS = [
   { name: "Pending", bg: "bg-amber-50", border: "border-amber-200", title: "text-amber-700", badge: "bg-amber-200 text-amber-800" },
@@ -29,9 +29,17 @@ function App() {
 
     if (!destination) return;
     if (destination.droppableId === source.droppableId) return;
-
     onMove(draggableId, destination.droppableId as Status)
+  }
+  function onDelete(id: string) {
+    if (!window.confirm("Delete this order?")) return;
 
+    const previous = orders;
+    setOrder((prev) => prev.filter((o) => o._id !== id)); // card disappears at once
+    deleteOrder(id).catch((e) => {
+      console.error("Could not delete", e);
+      setOrder(previous);                                 // bring it back if the server failed
+    });
   }
 
 
@@ -87,7 +95,7 @@ function App() {
 
                       <div className='space-y-3'>
                         {colOrders.map((order, index) => (
-                          <Card key={order._id} index={index} order={order} />
+                          <Card key={order._id} index={index} order={order} onDelete={onDelete} />
                         ))}
                       </div>
                       {!loading && colOrders.length === 0 && (
