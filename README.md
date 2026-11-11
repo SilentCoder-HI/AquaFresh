@@ -24,6 +24,17 @@ The app is built with Vite and TypeScript and uses a drag-and-drop board to move
 - @hello-pangea/dnd
 - Axios
 
+## Public deployment
+
+- Frontend: [https://aquafresh-nine.vercel.app/](https://aquafresh-nine.vercel.app/)
+- Backend API: [https://aqua-fresh-api.vercel.app/](https://aqua-fresh-api.vercel.app/)
+
+The frontend and backend are deployed as separate Vercel projects from this repository:
+
+1. For the backend project, set the root directory to `backend`, configure `MONGO_URI` with the production MongoDB connection string, and set `CLIENT_URL` to `https://aquafresh-nine.vercel.app`. Deploy it and confirm the API status response at the backend URL.
+2. For the frontend project, set the root directory to `frontend` and the framework preset to Vite. Add the `VITE_API_URL` environment variable with the value `https://aqua-fresh-api.vercel.app`.
+3. Deploy the frontend. If you change `VITE_API_URL`, redeploy so the value is included in the frontend build.
+
 ## Local setup
 
 ### Prerequisites
