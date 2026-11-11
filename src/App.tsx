@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import type { Order, Status } from './types/Order'
 import Card from './components/Card';
-import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
 import { getOrder, updateStatus } from './data/apt';
 
 const COLUMNS = [
@@ -43,10 +43,10 @@ function App() {
   }, [])
   return (
     <>
-      <div className='min-h-screen w-full flex flex-col items-center bg-gradient-to-b from-sky-100 to-white'>
+      <div className='min-h-screen w-full flex flex-col items-center bg-linear-to-b from-sky-100 to-white'>
 
         {/* Header */}
-        <header className='w-full bg-gradient-to-r from-sky-600 to-cyan-500 shadow-md'>
+        <header className='w-full bg-linear-to-r from-sky-600 to-cyan-500 shadow-md'>
           <h1 className="text-2xl md:text-3xl font-bold text-white text-center p-5 tracking-wide">
             💧 AquaFresh Order Board
           </h1>
