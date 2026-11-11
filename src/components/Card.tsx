@@ -1,13 +1,42 @@
-import type { Order } from './../types/Order'
-type Card = {
-    Order: Order,
+import { Draggable } from "@hello-pangea/dnd";
+import type { Order } from "../types/Order";
+import { deleteOrder } from "../data/apt";
+
+interface Props {
+  order: Order;
+  index: number;
 }
-export default function Card({ Order }: Card) {
-    return (
-        <div className="card" style={{ border: '1px solid #ccc', margin: '10px', padding: '15px', borderRadius: '8px' }}>
-            <h3>Customer: {Order.customer}</h3>
-            <p><strong>Package Size:</strong> {Order.packageSize}</p>
-            <p><strong>Status:</strong> <span className={`status-${Order.status.toLowerCase()}`}>{Order.status}</span></p>
+
+export default function Card({ order, index }: Props) {
+
+  const onDelete = async (id:string)=>{
+    deleteOrder(id).catch(console.error)
+  }
+  return (
+    <Draggable draggableId={String(order._id)} index={index}>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className={`mb-3 flex items-center  justify-between flex-row cursor-grab rounded-xl border border-slate-100 bg-white p-3 shadow-sm transition
+            ${snapshot.isDragging ? "shadow-lg ring-2 ring-sky-300" : "hover:shadow-md"}`}
+        >
+          <div className="flex flex-col">
+            <p className="font-semibold text-slate-800">{order.customer}</p>
+            <p className="mt-1 text-sm text-slate-500">💧 {order.packageSize}</p>
+          </div>
+          <button
+            type="button"
+            aria-label="Delete order"
+            title="Delete order"
+            onClick={() => onDelete(order._id)}
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-red-50 text-lg font-semibold leading-none text-red-500 shadow-sm ring-1 ring-red-200 transition duration-150 hover:bg-red-500 hover:text-white hover:shadow-md active:scale-90 cursor-pointer"
+          >
+            ×
+          </button>
         </div>
-    )
+      )}
+    </Draggable>
+  );
 }
